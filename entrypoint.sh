@@ -11,21 +11,21 @@ if [[ -z "$GITHUB_EVENT_PATH" ]]; then
     exit 1
 fi
 
-GITHUB_TOKEN = "$1"
+GITHUB_TOKEN="$1"
 
-URI = "https://api.github.com"
-API_HEADER = "Accept: application/vnd.github.v3+json"
-AUTH_HEADER = "Autorization: token ${GITHUB_TOKEN}"
+URI="https://api.github.com"
+API_HEADER="Accept: application/vnd.github.v3+json"
+AUTH_HEADER="Autorization: token ${GITHUB_TOKEN}"
 
-number = $( jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH" )
+number=$( jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH" )
 
 autolabel(){
 
-    body = $( curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${GITHUB_REPOSITORY}/pulls/${number}" )
-    additions = $( echo "$body" | jq '.additions' )
-    deletions = $( echo "$body" | jq '.deletions' )
-    total_modifications = $( echo "$additions + $deletions" | bc )
-    label_to_add = $( label_for "$total_modifications" )
+    body=$( curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${GITHUB_REPOSITORY}/pulls/${number}" )
+    additions=$( echo "$body" | jq '.additions' )
+    deletions=$( echo "$body" | jq '.deletions' )
+    total_modifications=$( echo "$additions + $deletions" | bc )
+    label_to_add=$( label_for "$total_modifications" )
 
     curl -sSL \
         -H "${AUTH_HEADER}" \
@@ -39,15 +39,15 @@ autolabel(){
 
 label_for(){
     if [ "$1" -lt 10 ]; then
-        label = "size/xs"
+        label="size/xs"
     elif [ "$1" -lt 100 ]; then
-        label = "size/s"
+        label="size/s"
     elif [ "$1" -lt 500 ]; then
-        label = "size/m"
+        label="size/m"
     elif [ "$1" -lt 1000 ]; then
-        label = "size/l"
+        label="size/l"
     else 
-        label = "size/xl"
+        label="size/xl"
     fi
     
     echo "$label"
