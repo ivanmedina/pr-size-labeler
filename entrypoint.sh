@@ -43,7 +43,7 @@ autolabel(){
     if [ "$label_to_add" == "size/xl" ] && [ "$fail_if_xl" == "true" ]; then
         echo "Pr is xl, please, short this!"
         exit 1
-
+    fi
 }
 
 label_for(){
