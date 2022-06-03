@@ -20,6 +20,10 @@ inputs:
     description: 'max size for PR to be considerated m'
     default: '1000'
     required: false
+  fail-if-xl:
+    description: 'define if fail when the PR size is xl'
+    default: 'false'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -29,3 +33,4 @@ runs:
     -  ${{ inputs.s-size-max }}
     -  ${{ inputs.m-size-max }}
     -  ${{ inputs.l-size-max }}
+    -  ${{ inputs.fail-if-xl }}

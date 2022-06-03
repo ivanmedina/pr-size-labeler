@@ -16,6 +16,7 @@ xs_size_max="$2"
 s_size_max="$3"
 m_size_max="$4"
 l_size_max="$5"
+fail_if_xl="$6"
 
 URI="https://api.github.com"
 API_HEADER="Accept: application/vnd.github.v3+json"
@@ -39,6 +40,10 @@ autolabel(){
         -d "{\"labels\":[\"${label_to_add}\"]}" \
         "${URI}/repos/${GITHUB_REPOSITORY}/issues/${number}/labels"
 
+    if [ "$label_to_add" == "size/xl" ] && [ "$fail_if_xl" == "true" ]; then
+        echo "Pr is xl, please, short this!"
+        exit 1
+
 }
 
 label_for(){
@@ -58,3 +63,5 @@ label_for(){
 }
 
 autolabel
+
+exit $?
