@@ -57,7 +57,7 @@ comment() {
     -X POST \
     -H "Content-Type: application/json" \
     -d "{\"body\":$comment}" \
-    "${$URI}/repos/${GITHUB_REPOSITORY}/issues/${number}/comments"
+    "${URI}/repos/${GITHUB_REPOSITORY}/issues/${number}/comments"
 }
 
 label_for(){
