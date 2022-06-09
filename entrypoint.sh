@@ -41,9 +41,23 @@ autolabel(){
         "${URI}/repos/${GITHUB_REPOSITORY}/issues/${number}/labels"
 
     if [ "$label_to_add" == "size/xl" ] && [ "$fail_if_xl" == "true" ]; then
-        echo "Pr is xl, please, short this!"
+        $message="Pr is xl, please, short this!"
+        comment $message
         exit 1
     fi
+}
+
+
+comment() {
+
+  local -r comment="$1"
+  curl -sSL \
+    -H "${AUTH_HEADER}" \
+    -H "${API_HEADER}" \
+    -X POST \
+    -H "Content-Type: application/json" \
+    -d "{\"body\":$comment}" \
+    "${$URI}/repos/${GITHUB_REPOSITORY}/issues/${number}/comments"
 }
 
 label_for(){
