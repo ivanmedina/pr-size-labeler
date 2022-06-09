@@ -50,14 +50,16 @@ autolabel(){
 
 comment() {
 
-  local -r comment="$1"
-  curl -sSL \
-    -H "${AUTH_HEADER}" \
-    -H "${API_HEADER}" \
-    -X POST \
-    -H "Content-Type: application/json" \
-    -d "{\"body\":\"$comment\"}" \
-    "${URI}/repos/${GITHUB_REPOSITORY}/issues/${number}/comments"
+    local -r comment="$1"
+    jq -n --arg msg "$GITHUB_ISSUE_COMMENT" '{body: $comment }' > tmp.txt
+
+    curl -sSL \
+         -H "Authorization: token ${GITHUB_TOKEN}" \
+         -H "Accept: application/vnd.github.v3+json" \
+         -X POST \
+         -H "Content-Type: application/json" \
+         -d @tmp.txt \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${GITHUB_ISSUE_NUMBER}/comments"
 }
 
 label_for(){
