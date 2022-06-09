@@ -41,7 +41,7 @@ autolabel(){
         "${URI}/repos/${GITHUB_REPOSITORY}/issues/${number}/labels"
 
     if [ "$label_to_add" == "size/xl" ] && [ "$fail_if_xl" == "true" ]; then
-        $message="Pr is xl, please, short this!"
+        message="Pr is xl, please, short this!"
         comment $message
         exit 1
     fi
