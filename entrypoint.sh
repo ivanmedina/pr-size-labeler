@@ -57,7 +57,7 @@ comment() {
         -H "${API_HEADER}" \
         -X POST \
         -H "Content-Type: application/json" \
-        -d "{\"\body\":\"${comment}\"}" \
+        -d '{"body":"Probando"}' \
         "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${number}/comments"
 }
 
