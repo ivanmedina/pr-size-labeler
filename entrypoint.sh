@@ -51,13 +51,13 @@ autolabel(){
 comment() {
 
     local -r comment="$1"
-    jq -n --arg msg "$comment" '{body: $msg }' > tmp.txt
+    # jq -n --arg msg "$comment" '{body: $msg }' > tmp.txt
     curl -sSL \
         -H "${AUTH_HEADER}" \
         -H "${API_HEADER}" \
         -X POST \
         -H "Content-Type: application/json" \
-        -d @tmp.txt \
+        -d "{\"\body\":\"${comment}\"}" \
         "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${number}/comments"
 }
 
