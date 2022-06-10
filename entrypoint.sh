@@ -42,7 +42,7 @@ autolabel(){
 
     if [ "$label_to_add" == "size/xl" ] && [ "$fail_if_xl" == "true" ]; then
         message="Pr is xl, please, short this!"
-        comment $message
+        comment "$message"
         exit 1
     fi
 }
